@@ -24,7 +24,7 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
-  <!-- 统一管理jar包版本11 -->
+  <!-- 统一管理jar包版本 -->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

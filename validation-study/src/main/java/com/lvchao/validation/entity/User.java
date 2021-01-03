@@ -25,7 +25,7 @@ public class User {
    /* @NotBlank(message = "{required}")*/
     @NotBlank
     private String username;
-    @Min(2)
+    @Min(1)
     @Max(200)
     private Integer age;
     private String email;

@@ -1,0 +1,18 @@
+{
+  "groups": [
+    {
+      "name": "spring.datasource-master",
+      "type": "javax.sql.DataSource",
+      "sourceType": "com.lvchao.mysql.datasource.DruidConfiguration",
+      "sourceMethod": "master()"
+    },
+    {
+      "name": "spring.datasource-slave",
+      "type": "javax.sql.DataSource",
+      "sourceType": "com.lvchao.mysql.datasource.DruidConfiguration",
+      "sourceMethod": "slave()"
+    }
+  ],
+  "properties": [],
+  "hints": []
+}

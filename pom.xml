@@ -14,6 +14,9 @@
       <module>redis-study</module>
       <module>security-oauth2-jwt-study</module>
       <module>validation-study</module>
+      <module>mybatisplus-study</module>
+      <module>excelkit-study</module>
+      <module>easyexcel-study</module>
   </modules>
   <packaging>pom</packaging>
 

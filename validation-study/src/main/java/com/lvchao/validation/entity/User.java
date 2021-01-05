@@ -20,13 +20,13 @@ import javax.validation.constraints.NotNull;
 public class User {
     private Long id;
 
-    @NotNull
+  //  @NotNull
     private String name;
    /* @NotBlank(message = "{required}")*/
-    @NotBlank
+   // @NotBlank
     private String username;
-    @Min(1)
-    @Max(200)
+    //@Min(1)
+    //@Max(200)
     private Integer age;
-    private String email;
+    //private String email;
 }

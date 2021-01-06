@@ -1,5 +1,6 @@
 package com.lvchao.easyexcel;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ZipUtil;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
@@ -20,6 +21,35 @@ import java.util.List;
  * @date Create on 2021/1/5
  */
 public class Test01 {
+    @Test
+    public void test003() throws IOException {
+        String filePath = "D:\\test\\lvchao\\lv.xls";
+        File file =new File(filePath);
+        System.out.println(file.isDirectory());
+        System.out.println(file.exists());
+        file.mkdirs();
+       // file.createNewFile();
+        //如果文件夹不存在则创建
+        if (file.exists()) {
+            file.mkdir();
+        } else
+        {
+            System.out.println("//目录存在");
+        }
+     //   File file1 = new File(filePath);
+       // File file = creatFile("");
+
+     //   System.out.println(FileUtil.isDirectory(filePath));
+       /* if (!FileUtil.exist(filePath) && FileUtil.isDirectory()){
+            FileUtil.mkdir(filePath);
+          //  FileUtil.createTempFile(filePath,true);
+            System.out.println("文件不存在，创建文件");
+        }else{
+            System.out.println();
+        }*/
+
+    }
+
     @Test
     public void test002(){
 //    /    ZipUtil.unzip("D:/test/");

@@ -38,8 +38,6 @@ import java.util.zip.ZipOutputStream;
 @RestController
 public class EasyExcelController {
 
-   // private ThreadLocal<Map<String, Object>> threadLocal = new ThreadLocal();
-
     /**
      * 模拟数据
      * @param start 数据开始下标
@@ -74,7 +72,6 @@ public class EasyExcelController {
             e.printStackTrace();
         }
         //文件输入流
-
         System.out.println("成功");
         return "upload sucess...";
     }
@@ -159,15 +156,6 @@ public class EasyExcelController {
     private void exportExcelEncrypt (HttpServletResponse response, Map<String, List<User>> map,String password) throws IOException {
         ServletOutputStream outputStream = response.getOutputStream();
         ZipOutputStream zipOutputStream = new ZipOutputStream(outputStream);
-        ZipParameters parameters = new ZipParameters();
-        parameters.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);
-        parameters.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_NORMAL);
-        if(!StringUtils.isEmpty(password)){
-            parameters.setEncryptFiles(true);
-            parameters.setEncryptionMethod(Zip4jConstants.ENC_METHOD_AES);
-            parameters.setAesKeyStrength(Zip4jConstants.AES_STRENGTH_256);
-            parameters.setPassword(password);
-        }
         try {
             for (Map.Entry<String, List<User>> entry : map.entrySet()) {
                 // 文件的名称
@@ -190,7 +178,6 @@ public class EasyExcelController {
                 //将excel对象以流的形式写入压缩流
                 workbook.write(zipOutputStream);
             }
-            zipOutputStream.setComment("123");
             zipOutputStream.flush();
         } catch (Exception e) {
             //抛出异常结束程序

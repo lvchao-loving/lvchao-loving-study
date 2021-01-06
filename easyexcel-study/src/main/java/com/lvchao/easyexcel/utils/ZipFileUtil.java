@@ -6,21 +6,26 @@ import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.util.Zip4jConstants;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.zip.ZipOutputStream;
 
 /**
  * 对文件进行加密压缩
  */
-public class ZipFilesUtil {
+public class ZipFileUtil {
+
     /**
      * 对文件加密
      * @param filePath 需要加密的文件夹或文件路径
      * @param zipFileName 加密后的文件路径
      * @param password 加密密码，必填
      */
-    public static void zipFileAndEncrypt(String filePath,String zipFileName,String password) throws ZipException {
+    public static void zipFileAndEncrypt(String filePath, String zipFileName, String password) throws ZipException, IOException {
         if (StringUtils.isBlank(password)){
             throw new RuntimeException("加密密码不为空");
         }

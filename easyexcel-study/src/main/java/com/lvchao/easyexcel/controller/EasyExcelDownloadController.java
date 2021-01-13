@@ -1,5 +1,6 @@
 package com.lvchao.easyexcel.controller;
 
+import cn.hutool.core.io.FileUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.read.listener.ReadListener;
 import com.alibaba.excel.support.ExcelTypeEnum;
@@ -8,7 +9,9 @@ import com.lvchao.easyexcel.utils.ZipFileUtil;
 import lombok.extern.slf4j.Slf4j;
 import net.lingala.zip4j.exception.ZipException;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -27,13 +30,15 @@ import java.util.zip.ZipOutputStream;
  * @date Create on 2021/1/5
  */
 
-@RestController
-@Slf4j
+// @RestController
+// @Slf4j
 public class EasyExcelDownloadController {
 
-    @GetMapping(value = "/test001")
-    public void execute1(HttpServletResponse response) throws ZipException {
-       // ZipFileUtil.zipFileAndEncrypt("D:\\test","demo.zip","123456");
+    @PostMapping(value = "/test001")
+    public void execute1(MultipartFile file) {
+        String prefix = FileUtil.getSuffix(file.getOriginalFilename());
+        System.out.println(prefix);
+        // ZipFileUtil.zipFileAndEncrypt("D:\\test","demo.zip","123456");
     }
 
     // 获取当前系统的临时目录
@@ -86,7 +91,7 @@ public class EasyExcelDownloadController {
         } catch (Exception e) {
             // 下载失败删除生成的文件
             deleteFile(filePaths);
-            log.error("文件下载出错", e);
+          //  log.error("文件下载出错", e);
         }
     }
 
@@ -139,7 +144,7 @@ public class EasyExcelDownloadController {
             }
         } catch (IOException e) {
             deleteFile(filePaths);
-            log.error("文件下载出错", e);
+            // log.error("文件下载出错", e);
         }
     }
     //创建文件File对象

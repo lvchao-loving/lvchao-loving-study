@@ -1,2 +1,8 @@
 server:
   port: 8888
+knife4j:
+  production: false #false代表当前环境文档可用，true代表当前环境文档不可用
+  basic:
+    enable: false #false代表当前环境文档不受账号密码限制，true代表当前环境文档查看需要账号密码登录
+    username: 123456
+    password: 123456

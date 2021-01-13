@@ -4,8 +4,6 @@ import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.lvchao.easyexcel.entity.ExcelTotalVo;
 import com.lvchao.easyexcel.entity.User;
-import io.swagger.models.auth.In;
-import lombok.SneakyThrows;
 
 /**
  * Description:

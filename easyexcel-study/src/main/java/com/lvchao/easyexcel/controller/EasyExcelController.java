@@ -9,6 +9,9 @@ import com.lvchao.easyexcel.entity.ExcelTotalVo;
 import com.lvchao.easyexcel.entity.User;
 import com.lvchao.easyexcel.listener.ExcelListener;
 import com.lvchao.easyexcel.listener.ExcelTotalDataListener;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.util.Zip4jConstants;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -35,6 +38,7 @@ import java.util.zip.ZipOutputStream;
  * @author lvchao
  * @date Create on 2021/1/5
  */
+@Api(description = "作用在类上的说明") // 单纯使用swagger，写成这样
 @RestController
 public class EasyExcelController {
 
@@ -57,8 +61,9 @@ public class EasyExcelController {
      * @param file
      * @return
      */
+    @ApiOperation("上传单个文件") // 作用在方法上，说明方法的含义
     @PostMapping("upload")
-    public String upload(MultipartFile file){
+    public String upload(@ApiParam(required = true,name = "文件") MultipartFile file){
         try{
             InputStream in = file.getInputStream();
             // 统计总数量
@@ -81,6 +86,7 @@ public class EasyExcelController {
      * @param response
      * @throws Exception
      */
+    @ApiOperation("上传批量文件")
     @GetMapping(value = "/downloadBatch")
     public void downloadBatch(HttpServletResponse response) throws Exception {
 
@@ -194,6 +200,7 @@ public class EasyExcelController {
      * @param response
      * @throws IOException
      */
+    @ApiOperation("下载单个文件")
     @GetMapping("downloadSimpleton")
     public void downloadSimpleton(HttpServletResponse response) throws IOException {
         // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman

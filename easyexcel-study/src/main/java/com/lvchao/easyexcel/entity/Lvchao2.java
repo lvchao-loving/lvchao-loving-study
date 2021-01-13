@@ -1,0 +1,22 @@
+package com.lvchao.easyexcel.entity;
+
+import lombok.*;
+
+/**
+ * Description:
+ *
+ * @author lvchao
+ * @date Create on 2021/1/8
+ */
+
+@Data
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class Lvchao2 {
+    private Integer age;
+    private String name;
+    private Integer type;
+
+}

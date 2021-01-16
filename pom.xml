@@ -11,14 +11,14 @@
     <module>lvchao-common</module>
     <module>springmvc-study</module>
     <module>springsecurity-study</module>
-      <module>redis-study</module>
-      <module>security-oauth2-jwt-study</module>
-      <module>validation-study</module>
-      <module>mybatisplus-study</module>
-      <module>excelkit-study</module>
-      <module>easyexcel-study</module>
+    <module>redis-study</module>
+    <module>security-oauth2-jwt-study</module>
+    <module>validation-study</module>
+    <module>mybatisplus-study</module>
+    <module>excelkit-study</module>
+    <module>easyexcel-study</module>
     <module>knife4j-study</module>
-      <module>rabbitmq-study</module>
+    <module>rabbitmq-study</module>
   </modules>
   <packaging>pom</packaging>
 

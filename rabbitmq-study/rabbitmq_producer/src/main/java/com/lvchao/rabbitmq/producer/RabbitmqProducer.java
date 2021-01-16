@@ -1,18 +1,15 @@
 package com.lvchao.rabbitmq.producer;
 
+import com.lvchao.rabbitmq.entity.LcMessage;
 import com.lvchao.rabbitmq.entity.LcRabbitMessage;
-import com.lvchao.rabbitmq.message.LcMessage;
 import com.lvchao.rabbitmq.service.LcRabbitMessageService;
 import com.lvchao.rabbitmq.utils.HanZiUtil;
 import com.lvchao.rabbitmq.utils.JsonUtils;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import springfox.documentation.spring.web.json.Json;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -46,6 +43,7 @@ public class RabbitmqProducer {
          * 这个Id保证消息全局唯一，在可靠性投递中,就用该Id来找到未成功投递的消息
          */
         correlationData.setId(lcRabbitMessage.getId());
+        // 将发送的消息存储到数据库中
         lcRabbitMessageService.save(lcRabbitMessage);
         // 同步发送消息
         rabbitTemplate.convertAndSend(exchangeName,routingKey,lcRabbitMessage,correlationData);

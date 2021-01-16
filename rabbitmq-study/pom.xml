@@ -13,6 +13,7 @@
     <modules>
         <module>rabbitmq_consumer</module>
         <module>rabbitmq_producer</module>
+        <module>rabbitmq_common</module>
     </modules>
 
     <dependencies>
@@ -30,6 +31,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- mail 开始 -->
+     <!--   <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>-->
+        <!-- mail 结束 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>

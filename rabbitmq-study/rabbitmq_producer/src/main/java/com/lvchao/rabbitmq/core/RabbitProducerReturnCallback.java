@@ -1,39 +1,43 @@
 package com.lvchao.rabbitmq.core;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.Message;
+import com.lvchao.rabbitmq.entity.LcRabbitMessage;
+import com.lvchao.rabbitmq.service.LcRabbitMessageService;
+import org.springframework.amqp.core.ReturnedMessage;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.Date;
 
+/**
+ * 说明：此回调方法只有在未发送到队列中才会被调用，成功发送则不会被调用
+ * @author lvchao
+ */
 @Component
-public class RabbitProducerReturnCallback implements RabbitTemplate.ReturnCallback {
+public class RabbitProducerReturnCallback implements RabbitTemplate.ReturnsCallback {
+
+    @Autowired
+    private LcRabbitMessageService lcRabbitMessageService;
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
     @PostConstruct
     public void init() {
-        rabbitTemplate.setReturnCallback(this);
+        rabbitTemplate.setReturnsCallback(this);
     }
 
+    /**
+     * ReturnedMessage 对象中包含了很多属性，按需获取
+     * @param returnedMessage
+     */
     @Override
-    public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
-        synchronized (this){
-            System.out.println();
-            System.out.println("RabbitTemplate.ReturnCallback 开始");
-            System.out.println("  message:" + message.getMessageProperties());
-            System.out.println("  message:" + message.getBody());
-            System.out.println("  replyCode:" + replyCode);
-            System.out.println("  replyText:" + replyText);
-            System.out.println("  exchange:" + exchange);
-            System.out.println("  routingKey:" + routingKey);
-            System.out.println("RabbitTemplate.ReturnCallback 结束");
-            System.out.println();
-        }
+    public void returnedMessage(ReturnedMessage returnedMessage) {
+        // 获取发送消息的唯一标识
+        String correlationId = (String)returnedMessage.getMessage().getMessageProperties().getHeaders().get("spring_returned_message_correlation");
+        LcRabbitMessage build = LcRabbitMessage.builder().id(correlationId).cause("未成功发送到队列中(exchange:" + returnedMessage.getExchange() + ",routingKey" + returnedMessage.getRoutingKey() + ")").updateTime(new Date()).queueFlag(2).build();
+        lcRabbitMessageService.updateById(build);
     }
 
 }

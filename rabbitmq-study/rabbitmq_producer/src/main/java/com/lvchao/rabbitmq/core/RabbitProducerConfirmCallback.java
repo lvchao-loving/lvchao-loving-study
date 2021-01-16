@@ -2,8 +2,6 @@ package com.lvchao.rabbitmq.core;
 
 import com.lvchao.rabbitmq.entity.LcRabbitMessage;
 import com.lvchao.rabbitmq.service.LcRabbitMessageService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +9,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * @author lvchao
+ */
 @Component
 public class RabbitProducerConfirmCallback implements RabbitTemplate.ConfirmCallback {
 
@@ -22,8 +22,6 @@ public class RabbitProducerConfirmCallback implements RabbitTemplate.ConfirmCall
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
-
-   // private static final SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
 
     @PostConstruct
     public void init() {

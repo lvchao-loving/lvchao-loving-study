@@ -18,6 +18,7 @@
       <module>excelkit-study</module>
       <module>easyexcel-study</module>
     <module>knife4j-study</module>
+      <module>rabbitmq-study</module>
   </modules>
   <packaging>pom</packaging>
 

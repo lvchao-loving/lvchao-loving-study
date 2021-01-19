@@ -1,22 +1,21 @@
 server:
-  port: 8001
+  port: 8005
 spring:
   application:
-    name: rabbitmq-producer # spring.application.name
+    name: rabbitmq-consumer
   # RabbitMQ 配置项，对应 RabbitProperties 配置类
   rabbitmq:
     host: 192.168.44.129 # RabbitMQ 服务的地址
     port: 5672 # RabbitMQ 服务的端口
     username: lvchao # RabbitMQ 服务的账号
     password: lvchao # RabbitMQ 服务的密码
-    publisher-confirm-type: correlated # 设置 Confirm 类型为 CORRELATED 。
-    publisher-returns: true #
     virtual-host: /lc
-    template:
-      mandatory: true #设置为 true 后 消费者在消息没有被路由到合适队列情况下会被return监听，而不会自动删除
-      retry: # 目前不知道怎么起作用
-        enabled: true # 发送重试是否可用,true 启动重试机制
-        max-attempts: 3 # 最大重试次数
+    listener:
+      simple:
+        concurrency: 5
+        acknowledge-mode: manual  # manual:手动 ack（确认）
+        max-concurrency: 10
+        prefetch: 1
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -26,8 +25,5 @@ spring:
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.lvchao.rabbitmq.entity
-  #configuration:
-   # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-logging:
-  level:
-    root: error
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

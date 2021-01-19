@@ -5,13 +5,15 @@ import com.lvchao.rabbitmq.entity.LcRabbitMessage;
 import com.lvchao.rabbitmq.utils.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-@Component
-public class Demo13Consumer {
+/**
+ * rabbitmq 消费者
+ */
+// @Component
+public class RabbitmqConsumer {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 

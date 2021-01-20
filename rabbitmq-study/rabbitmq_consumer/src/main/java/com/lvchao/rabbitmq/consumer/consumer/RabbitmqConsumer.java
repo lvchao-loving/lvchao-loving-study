@@ -66,7 +66,7 @@ public class RabbitmqConsumer {
     }*/
     @RabbitHandler
     @RabbitListener(queues = RabbitmqConstant.QUEUE)
-    @Transactional(rollbackFor = Exception.class) // 如果调用不同的服务需要 调用分布式事务
+  //  @Transactional(rollbackFor = Exception.class) // 如果调用不同的服务需要 调用分布式事务
     public void onLcMessage(@Payload LcRabbitMessage message, @Headers Map<String,Object> headers, Channel channel) throws IOException {
         /*
          * Delivery Tag 用来标识信道中投递的消息。RabbitMQ 推送消息给 Consumer 时，会附带一个 Delivery Tag，
@@ -80,6 +80,7 @@ public class RabbitmqConsumer {
          *  如果为 true，则额外将比第一个参数指定的 delivery tag 小的消息一并确认
          */
         boolean multiple = false;
+        // 计数的功能也可以利用redis实现，因为重复的查询数据库对延迟性不好，其次就是有多数据源问题，甚至是分布式事务等问题；
         LcRabbitMessage lcRabbitMessage = lcRabbitMessageService.getById(message.getId());
         if (lcRabbitMessage == null){
             lcRabbitMessage = LcRabbitMessage.builder().retryNum(0).build();
@@ -95,9 +96,10 @@ public class RabbitmqConsumer {
             // 加锁的目的就是了一起打印
             // synchronized (this){
             // 模拟延迟
-            Thread.sleep(new Random().nextInt(1000));
+            Thread.sleep(new Random().nextInt(10));
             // 当年龄未偶数时失败 并且 随机数为偶数时 模拟消息处理异常
-            if (lcMessage.getAge() / 2 == 0 && new Random().nextInt(10) / 2 == 0){
+           // if (lcMessage.getAge() / 2 == 0 && new Random().nextInt(10) / 2 == 0){
+            if (lcMessage.getAge() % 2 == 0 ){
                 throw new RuntimeException("抛出异常");
             }
             // }
@@ -106,8 +108,16 @@ public class RabbitmqConsumer {
             channel.basicAck(deliveryTag,multiple);
         }catch (Exception e){
             build.setConsumeFlag(2);
-            build.setCause(e.getMessage());
-            lcRabbitMessageService.updateById(build);
+            if (build.getRetryNum() == 5){
+                build.setCause("消费数据失败，进入死信队列");
+                lcRabbitMessageService.updateById(build);
+                channel.basicAck(deliveryTag,true);
+            }else{
+                build.setCause(e.getMessage());
+                lcRabbitMessageService.updateById(build);
+                throw new RuntimeException("rabbitmq接受小时失败");
+            }
+
         }
     }
 }

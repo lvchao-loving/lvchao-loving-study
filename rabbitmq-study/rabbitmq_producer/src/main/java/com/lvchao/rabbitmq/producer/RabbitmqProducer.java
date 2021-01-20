@@ -46,7 +46,6 @@ public class RabbitmqProducer {
         // 将发送的消息存储到数据库中
         System.out.println("发送消息数据前:" + JsonUtils.toString(lcRabbitMessage));
         lcRabbitMessageService.save(lcRabbitMessage);
-        System.out.println("发送消息数据后:" + JsonUtils.toString(lcRabbitMessage));
         // 同步发送消息
         rabbitTemplate.convertAndSend(exchangeName,routingKey,lcRabbitMessage,correlationData);
     }

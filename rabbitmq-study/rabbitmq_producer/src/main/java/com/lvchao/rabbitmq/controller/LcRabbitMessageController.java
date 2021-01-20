@@ -37,7 +37,7 @@ public class LcRabbitMessageController {
     @GetMapping("syncSend")
     public String syncSend(Integer num,String exchangeName,String routingKey) throws InterruptedException {
         for (int i = 1; i <= num; i++) {
-            Thread.sleep(new Random().nextInt(300));
+          //  Thread.sleep(new Random().nextInt(300));
             rabbitmqProducer.syncSend(i,exchangeName,routingKey);
         }
         return "syncSend success......";
